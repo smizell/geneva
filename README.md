@@ -18,6 +18,9 @@ var logicExample = geneva.run(
 // Should return [2, 3, 4]
 var mapExample = geneva.run(["map", ["func", "inc"], ["list", 1, 2, 3]]);
 
+// Should return 8
+var mapExample = geneva.run(["reduce", ["func", "+"], ["list", 2, 3, 3]]);
+
 // The function value should return 100
 var defExample = geneva.run(
   ["geneva",
