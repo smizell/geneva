@@ -13,8 +13,15 @@ var logicExample = geneva.run(
   ["if", ["=", 5, 5],
     ["inc", 5],
     ["+", 4, 4]]
-)
+);
 
 // Should return [2, 3, 4]
-var mapExample = geneva.run(["map", ["inc"], ["list", 1, 2, 3]]);
+var mapExample = geneva.run(["map", ["func", inc"], ["list", 1, 2, 3]]);
+
+// The function `value` should return 100
+var defExample = geneva.run(
+  ["geneva",
+    ["def", "test", 100],
+    ["value", "test"]]
+);
 ```

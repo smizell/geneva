@@ -52,16 +52,53 @@ describe("Geneva Core", function() {
     });
   });
 
-  describe("identity", function() {
-    describe("when no args are given", function() {
-      describe("when the function is a core function", function() {
-        it("should return the function", function() {
-          var func = geneva.callFunc(["identity"]);
-          expect(func).to.eql(geneva.getFunc("identity"));
-        });
-      });
+  describe("setVar", function() {
+    it("should set a variable", function() {
+      geneva.setVar("test", "value");
+      expect(geneva.vars.test).to.equal("value");
     });
+  });
 
+  describe("getVar", function() {
+    it("should return a variable", function() {
+      geneva.setVar("test", "value");
+      var value = geneva.getVar("test");
+      expect(value).to.equal("value");
+    });
+  });
+
+  describe("value", function() {
+    it("should retrieve a stored variable", function() {
+      geneva.setVar("test", "value");
+      var testVar = geneva.run(["value", "test"]);
+      expect(testVar).to.equal("value");
+    });
+  });
+
+  describe("func", function() {
+    it("should return the function given", function() {
+      var func = geneva.run(["func", "identity"]);
+      expect(func).to.eql(geneva.getFunc("identity"));
+    });
+  });
+
+  describe("def", function() {
+    it("should set a stored variable", function() {
+      geneva.run(["def", "test", "value"]);
+      var value = geneva.getVar("test");
+      expect(value).to.equal("value");
+    });
+  })
+
+  describe("geneva", function() {
+    it("should execute all functions given", function() {
+      geneva.setVar("test", "oops");
+      var exec = geneva.run(["geneva", ["def", "test", 500], ["value", "test"]]);
+      expect(exec[1]).to.equal(500);
+    });
+  });
+
+  describe("identity", function() {
     it("should return the value given", function() {
       var identity = geneva.callFunc(["identity", 4]);
       expect(identity).to.equal(4);
@@ -178,14 +215,14 @@ describe("Geneva Core", function() {
   describe("functional", function() {
     describe("map", function() {
       it("should map to a function", function() {
-        var inc = geneva.callFunc(["map", ["inc"], ["list", 1, 2, 3]]);
+        var inc = geneva.callFunc(["map", ["func", "inc"], ["list", 1, 2, 3]]);
         expect(inc).to.eql([2, 3, 4]);
       });
     });
 
     describe("reduce", function() {
       it("should reduce to a function", function() {
-        var sum = geneva.callFunc(["reduce", ["+"], ["list", 1, 2, 3]]);
+        var sum = geneva.callFunc(["reduce", ["func", "+"], ["list", 1, 2, 3]]);
         expect(sum).to.eql(6);
       });
     });
