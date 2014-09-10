@@ -14,5 +14,9 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "~2.4.1"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "mocha": "^1.21.4"
   }
 }

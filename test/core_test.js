@@ -28,7 +28,24 @@ describe("Geneva Core", function() {
     });
   });
 
+  /*describe("gf", function() {
+    describe("when the function is a core function", function() {
+      it("should return the function", function() {
+
+      });
+    });
+  });*/
+
   describe("identity", function() {
+    describe("when no args are given", function() {
+      describe("when the function is a core function", function() {
+        it("should return the function", function() {
+          var func = geneva.callFunc(["identity"]);
+          expect(func).to.eql(geneva.identity);
+        });
+      });
+    });
+
     it("should return the value given", function() {
       var identity = geneva.callFunc(["identity", 4]);
       expect(identity).to.equal(4);
@@ -102,9 +119,7 @@ describe("Geneva Core", function() {
         expect(equal).to.be.false
       });
     });
-  });
 
-  describe("logic", function() {
     describe("not=", function() {
       it("should return false for equal values", function() {
         var equal = geneva.callFunc(["not=", 5, 5]);
@@ -140,6 +155,15 @@ describe("Geneva Core", function() {
           var fails = geneva.callFunc(["if", false, "OK", "FAIL"]);
           expect(fails).to.equal("FAIL")
         });
+      });
+    });
+  });
+
+  describe("functional", function() {
+    describe("map", function() {
+      it("should map to a function", function() {
+        var inc = geneva.callFunc(["map", ["inc"], ["list", 1, 2, 3]]);
+        expect(inc).to.eql([2, 3, 4]);
       });
     });
   });
