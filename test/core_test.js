@@ -28,20 +28,29 @@ describe("Geneva Core", function() {
     });
   });
 
-  /*describe("gf", function() {
+  describe("getFunc", function() {
     describe("when the function is a core function", function() {
       it("should return the function", function() {
-
+        var identity = geneva.getFunc("identity");
+        expect(identity([4])).to.equal(4);
       });
     });
-  });*/
+  });
+
+  describe("addFunc", function() {
+    it("should add a function to the list", function() {
+      var expectedCount = geneva.funcs.length + 1;
+      geneva.addFunc("test", function() {});
+      expect(geneva.funcs.length).to.equal(expectedCount);
+    });
+  });
 
   describe("identity", function() {
     describe("when no args are given", function() {
       describe("when the function is a core function", function() {
         it("should return the function", function() {
           var func = geneva.callFunc(["identity"]);
-          expect(func).to.eql(geneva.identity);
+          expect(func).to.eql(geneva.getFunc("identity"));
         });
       });
     });
@@ -164,6 +173,13 @@ describe("Geneva Core", function() {
       it("should map to a function", function() {
         var inc = geneva.callFunc(["map", ["inc"], ["list", 1, 2, 3]]);
         expect(inc).to.eql([2, 3, 4]);
+      });
+    });
+
+    describe("reduce", function() {
+      it("should reduce to a function", function() {
+        var sum = geneva.callFunc(["reduce", ["+"], ["list", 1, 2, 3]]);
+        expect(sum).to.eql(6);
       });
     });
   });

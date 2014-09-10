@@ -8,12 +8,13 @@ This is an example of a JSON flavor of Lisp. This is just for fun at this point,
 ```javascript
 geneva = Geneva();
 
-var example = geneva.run(
+// Should be equal to 6
+var logicExample = geneva.run(
   ["if", ["=", 5, 5],
     ["inc", 5],
     ["+", 4, 4]]
 )
 
-// Should print 6
-console.log(example);
+// Should return [2, 3, 4]
+var mapExample = geneva.run(["map", ["inc"], ["list", 1, 2, 3]]);
 ```
