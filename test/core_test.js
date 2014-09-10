@@ -7,6 +7,13 @@ describe("Geneva Core", function() {
     geneva = Geneva();
   });
 
+  describe("isCallable", function() {
+    it("should return true if callable", function() {
+      var callable = geneva.isCallable(["identity", 4]);
+      expect(callable).to.be.true
+    });
+  });
+
   describe("callFuncByName", function() {
     it("should call the correct function", function() {
       var identity = geneva.callFuncByName('identity', [4]);
