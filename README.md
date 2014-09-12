@@ -26,7 +26,7 @@ var reduceExample = geneva.run(["!reduce", "~+", [2, 3, 3]]);
 // Should return 14
 var fnExample = geneva.run(
   ["!do",
-    ["defn", "add-four", ["x"],
+    ["!defn", "add-four", ["x"],
       ["!+", "~x", 4]],
     ["!add-four", 10]]);
 ```
