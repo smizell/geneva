@@ -189,6 +189,13 @@ describe("Geneva Core", function() {
         expect(three).to.equal(3);
       });
     });
+
+    describe("mod", function() {
+      it("should return the mod", function() {
+        var mod = geneva.run(["!mod", 6, 4]);
+        expect(mod).to.equal(2);
+      });
+    });
   });
 
   describe("logic", function() {
@@ -260,6 +267,13 @@ describe("Geneva Core", function() {
       it("should reduce to a function", function() {
         var sum = geneva.run(["!reduce", "~+", [1, 2, 3]]);
         expect(sum).to.eql(6);
+      });
+    });
+
+    describe("concat", function() {
+      it("should concat arrays", function() {
+        var concat = geneva.run(["!concat", [1, 2, 3], [4, 5]]);
+        expect(concat).to.eql([1, 2, 3, 4, 5]);
       });
     });
   });
