@@ -6,25 +6,20 @@ This is an example of a JSON flavor of Lisp. This is just for fun at this point,
 ## Example
 
 ```javascript
+// The ! is used to call a function
+// The ~ is used to pass around variables
 geneva = Geneva();
 
 // Should be equal to 6
 var logicExample = geneva.run(
-  ["if", ["=", 5, 5],
-    ["inc", 5],
-    ["+", 4, 4]]
+  ["!if", ["!=", 5, 5],
+    ["!inc", 5],
+    ["!+", 4, 4]]
 );
 
 // Should return [2, 3, 4]
-var mapExample = geneva.run(["map", ["func", "inc"], ["list", 1, 2, 3]]);
+var mapExample = geneva.run(["!map", "~inc", [1, 2, 3]]);
 
 // Should return 8
-var reduceExample = geneva.run(["reduce", ["func", "+"], ["list", 2, 3, 3]]);
-
-// The function value should return 100
-var defExample = geneva.run(
-  ["geneva",
-    ["def", "test", 100],
-    ["value", "test"]]
-);
+var reduceExample = geneva.run(["!reduce", "~+", [2, 3, 3]]);
 ```
