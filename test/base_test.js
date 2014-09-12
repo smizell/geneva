@@ -253,6 +253,30 @@ describe("Geneva Core", function() {
         });
       });
     });
+
+    describe("cond", function() {
+      it("should return the first true value", function() {
+        var condTest = geneva.run(["!cond", false, "FAIL",
+                                            false, "Another FAIL",
+                                            true, "SUCCESS",
+                                            false, "Last FAIL"]);
+        expect(condTest).to.equal("SUCCESS");
+      });
+
+      it("should return null if none are true", function() {
+        var condTest = geneva.run(["!cond", false, "FAIL",
+                                            false, "Another FAIL",
+                                            false, "Last FAIL"]);
+        expect(condTest).to.be.null;
+      });
+
+      it("should return else value if none are true", function() {
+        var condTest = geneva.run(["!cond", false, "FAIL",
+                                            false, "Another FAIL",
+                                            ":else", "NONE PASS"]);
+        expect(condTest).to.be.equal("NONE PASS");
+      });
+    });
   });
 
   describe("functional", function() {
@@ -274,6 +298,29 @@ describe("Geneva Core", function() {
       it("should concat arrays", function() {
         var concat = geneva.run(["!concat", [1, 2, 3], [4, 5]]);
         expect(concat).to.eql([1, 2, 3, 4, 5]);
+      });
+    });
+
+    describe("range", function() {
+      describe("when one arg given", function() {
+        it("should return the range", function() {
+          var range = geneva.run(["!range", 5]);
+          expect(range).to.eql([0, 1, 2, 3, 4]);
+        });
+      });
+
+      describe("when two args given", function() {
+        it("should return the range", function() {
+          var range = geneva.run(["!range", 0, 5]);
+          expect(range).to.eql([0, 1, 2, 3, 4]);
+        });
+      });
+
+      describe("when three args given", function() {
+        it("should return the range", function() {
+          var range = geneva.run(["!range", 0, 5, 2]);
+          expect(range).to.eql([0, 2, 4]);
+        });
       });
     });
   });
