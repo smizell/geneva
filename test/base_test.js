@@ -1,5 +1,4 @@
 var Geneva = require('../lib/base'),
-    _ = require('mori'),
     chai = require('chai'),
     expect = chai.expect;
 
@@ -129,6 +128,34 @@ describe("Geneva Core", function() {
         expect(identity).to.equal(4);
       });
     });
+
+    describe("fn", function() {
+      it("should allow for creating functions", function() {
+        var fn = geneva.run(
+          ["!map", ["!fn", ["x"],
+                     ["!+", "~x", 1]],
+                   [1, 2, 3]]);
+        expect(fn).to.eql([2, 3, 4]);
+      });
+    });
+
+    describe("do", function() {
+      it("should execute each code given", function() {
+        var doTest = geneva.run(["!do", ["!def", "x", 4], "~x"]);
+        expect(doTest[1]).to.equal(4);
+      });
+    });
+
+    describe("defn", function() {
+      it("should allow for defining a function", function() {
+        var fnTest = geneva.run(
+          ["!do", 
+            ["!defn", "addFour", ["x"],
+              ["!+", "~x", 4]],
+            ["!addFour", 10]]);
+        expect(fnTest[1]).to.equal(14);
+      });
+    })
   });
 
   describe("math", function() {
