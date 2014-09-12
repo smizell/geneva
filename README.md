@@ -10,6 +10,11 @@ This is an example of a JSON flavor of Lisp. This is just for fun at this point,
 // The ~ is used to pass around variables
 geneva = Geneva();
 
+// For this logic example, the = function may 
+// look odd because it starts with a !. This is
+// calling the = function, not testing for inequality,
+// which is done with !not=
+
 // Should be equal to 6
 var logicExample = geneva.run(
   ["!if", ["!=", 5, 5],
