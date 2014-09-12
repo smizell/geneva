@@ -108,5 +108,18 @@ describe("Geneva Core", function() {
         expect(val).to.eql([1, 2, 3])
       });
     });
+
+    describe("identity", function() {
+      it("should return the value given", function() {
+        var identity = geneva.run(["!identity", 4]);
+        expect(identity).to.equal(4);
+      });
+
+      it("should allow for variables", function() {
+        geneva.set("test", "var", 4)
+        var identity = geneva.run(["!identity", "~test"]);
+        expect(identity).to.equal(4);
+      });
+    });
   });
 });
