@@ -142,7 +142,7 @@ describe("Geneva Core", function() {
     describe("do", function() {
       it("should execute each code given", function() {
         var doTest = geneva.run(["!do", ["!def", "x", 4], "~x"]);
-        expect(doTest[1]).to.equal(4);
+        expect(doTest).to.equal(4);
       });
     });
 
@@ -153,7 +153,7 @@ describe("Geneva Core", function() {
             ["!defn", "addFour", ["x"],
               ["!+", "~x", 4]],
             ["!addFour", 10]]);
-        expect(fnTest[1]).to.equal(14);
+        expect(fnTest).to.equal(14);
       });
     })
   });
