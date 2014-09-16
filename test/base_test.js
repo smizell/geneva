@@ -274,4 +274,13 @@ describe("Geneva Core", function() {
       });
     });
   });
+
+  describe("shortcuts", function() {
+    describe("zero?", function() {
+      it("should return the correct value", function() {
+        expect(geneva.run(["!zero?", 0])).to.be.true;
+        expect(geneva.run(["!zero?", 1])).to.be.false;
+      });
+    });
+  });
 });
