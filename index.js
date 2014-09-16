@@ -1,3 +1,3 @@
-var Geneva = require("./lib/core").Geneva;
+var Geneva = require("./lib/base");
 
 module.exports = Geneva;

@@ -34,4 +34,13 @@ var fnExample = geneva.run(
     ["!defn", "add-four", ["x"],
       ["!+", "~x", 4]],
     ["!add-four", 10]]);
+
+// Solve FizzBuzz
+var fizzBuzz = geneva.run(
+  ["!map",
+    ["!fn", ["x"], ["!cond", ["!zero?", ["!mod", "~x", 15]], "FizzBuzz",
+                             ["!zero?", ["!mod", "~x", 5]], "Buzz",
+                             ["!zero?", ["!mod", "~x", 3]], "Fizz",
+                             ":else", "~x"]],
+    ["!range", 1, 101]])
 ```
