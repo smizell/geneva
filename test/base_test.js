@@ -70,7 +70,7 @@ describe("Geneva Core", function() {
             ["!addFour", 10]]);
         expect(fnTest).to.equal(14);
       });
-    })
+    })*/
   });
 
   describe("math", function() {
@@ -237,6 +237,6 @@ describe("Geneva Core", function() {
           expect(range).to.eql([0, 2, 4]);
         });
       });
-    });*/
+    });
   });
 });
