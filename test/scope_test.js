@@ -35,4 +35,16 @@ describe("Scope", function() {
       });
     });
   });
+
+  describe("merge", function() {
+    it("should return true", function() {
+      var scope1 = Scope({foo: 1, test: 5}),
+          scope2 = Scope({foo: 10, bar: 2}),
+          scope3 = scope1.merge(scope2);
+      expect(scope3.has("foo")).to.be.true;
+      expect(scope3.get("foo")).to.equal(10);
+      expect(scope3.has("bar")).to.be.true;
+      expect(scope3.get("test")).to.equal(5);
+    });
+  });
 });

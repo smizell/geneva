@@ -44,8 +44,15 @@ describe("Geneva Core", function() {
       });
     });
 
-    /*describe("fn", function() {
+    describe("fn", function() {
       it("should allow for creating functions", function() {
+        var fn = geneva.run(
+          ["!fn", ["x"],
+            ["!+", "~x", 1]]);
+        expect(fn.call([4], geneva, Scope())).to.eql(5);
+      });
+
+      it("should be able to be passed around", function() {
         var fn = geneva.run(
           ["!map", ["!fn", ["x"],
                      ["!+", "~x", 1]],
@@ -70,7 +77,28 @@ describe("Geneva Core", function() {
             ["!addFour", 10]]);
         expect(fnTest).to.equal(14);
       });
-    })*/
+
+      it("should use local scope", function() {
+        var fn = geneva.run(
+          ["!do",
+            ["!def", "x", 10],
+            ["!map", ["!fn", ["x"],
+                       ["!+", "~x", 1]],
+                     [1, 2, 3]]]);
+        expect(fn).to.eql([2, 3, 4]);
+      });
+
+      it("should not affect global scope", function() {
+        var fn = geneva.run(
+          ["!do",
+            ["!def", "x", 10],
+            ["!map", ["!fn", ["x"],
+                       ["!+", "~x", 1]],
+                     [1, 2, 3]],
+            "~x"]);
+        expect(fn).to.eql(10);
+      });
+    });
   });
 
   describe("math", function() {

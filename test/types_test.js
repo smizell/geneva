@@ -1,6 +1,8 @@
 var Variable = require('../lib/types').Variable,
     CoreFunction = require('../lib/types').CoreFunction,
+    UserFunction = require('../lib/types').UserFunction,
     Scope = require("../lib/scope"),
+    Geneva = require("../lib/base")
     chai = require('chai'),
     expect = chai.expect;
 
@@ -45,4 +47,48 @@ describe("Types", function() {
       });
     });
   });
+
+  describe("UserFunction", function() {
+    it("should allow for defining functions", function() {
+      var global = Geneva(),
+          fn = new UserFunction(["x"], [["!+", "~x", 4]]);
+      expect(fn.call([5], global, Scope())).to.equal(9);
+    });
+
+    it("should work with the global scope", function() {
+      var global = Geneva(),
+          fn = new UserFunction(["x"], [["!+", "~x", "~y"]]);
+      global.run(["!def", "y", 4])
+      expect(fn.call([5], global, Scope())).to.equal(9);
+    });
+
+    it("should take a variable", function() {
+      var global = Geneva(),
+          fn = new UserFunction(["x"], [["!+", 5, "~x"]]);
+      global.setVar("y", 4);
+      expect(fn.call(["~y"], global, Scope())).to.equal(9);
+    });
+
+    it("should take a function", function() {
+      var global = Geneva(),
+          fn = new UserFunction(["x"], [["!+", 5, "~x"]]);
+      expect(fn.call([["!+", 2, 2]], global, Scope())).to.equal(9);
+    });
+
+    it("should use local scope over global", function() {
+      var global = Geneva(),
+          fn = new UserFunction(["x"], [["!+", "~x", 4]]);
+      global.set("x", new Variable(100));
+      expect(fn.call([5], global, Scope())).to.equal(9);
+    });
+
+    it("should not affect global scope", function() {
+      var global = Geneva(),
+          local = Scope(),
+          fn = new UserFunction(["x"], [["!+", "~x", 4]]);
+      global.set("x", new Variable(100));
+      fn.call([5], global, local);
+      expect(global.get("x", local).get()).to.equal(100);
+    });
+  })
 });
