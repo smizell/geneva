@@ -219,6 +219,13 @@ describe("Geneva Core", function() {
                                             ":else", "NONE PASS"]);
         expect(condTest).to.be.equal("NONE PASS");
       });
+
+      it("should allow for functions", function() {
+        var condTest = geneva.run(["!cond", ["!=", 3, 4], "FAIL",
+                                            ["!=", 3, 3], "SUCCESS",
+                                            ":else", "Last FAIL"]);
+        expect(condTest).to.equal("SUCCESS");
+      });
     });
   });
 
