@@ -44,3 +44,31 @@ var fizzBuzz = geneva.run(
                              ":else", "~x"]],
     ["!range", 1, 101]])
 ```
+
+## Available Functions
+
+* identity
+* def
+* inc
+* +
+* -
+* mod
+* fn
+* defn
+* do
+* let
+* =
+* not=
+* if
+* cond
+* map
+* reduce
+* filter
+* concat
+* range
+* zero?
+* even?
+* odd?
+* str
+* join
+* split

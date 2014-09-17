@@ -263,6 +263,14 @@ describe("Geneva Core", function() {
       });
     });
 
+    describe("reduce", function() {
+      it("should reduce to a function", function() {
+        var even = geneva.run(
+          ["!filter", "~even?", [1, 2, 3, 4, 10, 11]]);
+        expect(even).to.eql([2, 4, 10]);
+      });
+    });
+
     describe("concat", function() {
       it("should concat arrays", function() {
         var concat = geneva.run(["!concat", [1, 2, 3], [4, 5]]);
@@ -299,6 +307,20 @@ describe("Geneva Core", function() {
       it("should return the correct value", function() {
         expect(geneva.run(["!zero?", 0])).to.be.true;
         expect(geneva.run(["!zero?", 1])).to.be.false;
+      });
+    });
+
+    describe("even?", function() {
+      it("should return the correct value", function() {
+        expect(geneva.run(["!even?", 4])).to.be.true;
+        expect(geneva.run(["!even?", 5])).to.be.false;
+      });
+    });
+
+    describe("odd?", function() {
+      it("should return the correct value", function() {
+        expect(geneva.run(["!odd?", 4])).to.be.false;
+        expect(geneva.run(["!odd?", 5])).to.be.true;
       });
     });
   });
