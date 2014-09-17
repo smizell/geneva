@@ -343,5 +343,26 @@ describe("Geneva Core", function() {
         expect(geneva.run(["!split", "1,2,3", ","])).to.eql(["1", "2", "3"]);
       });
     });
+
+    describe("starts-with?", function() {
+      it("should tell if a string starts with a prefix", function() {
+        expect(geneva.run(["!starts-with?", "World", "Wo"])).to.be.true;
+        expect(geneva.run(["!starts-with?", "World", "Won"])).to.be.false;
+      });
+    });
+
+    describe("ends-with?", function() {
+      it("should tell if a string ends with a suffix", function() {
+        expect(geneva.run(["!ends-with?", "World", "ld"])).to.be.true;
+        expect(geneva.run(["!ends-with?", "World", "Wo"])).to.be.false;
+      });
+    });
+
+    describe("contains?", function() {
+      it("should tell if a string contains a substring", function() {
+        expect(geneva.run(["!contains?", "World", "ld"])).to.be.true;
+        expect(geneva.run(["!contains?", "World", "Hello"])).to.be.false;
+      });
+    });
   });
 });

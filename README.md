@@ -50,6 +50,8 @@ var fizzBuzz = geneva.run(
 
 ## Available Functions
 
+### Core
+
 * identity
 * def
 * inc
@@ -72,6 +74,12 @@ var fizzBuzz = geneva.run(
 * zero?
 * even?
 * odd?
+
+### String
+
 * str
 * join
 * split
+* starts-with?
+* ends-with?
+* contains?
