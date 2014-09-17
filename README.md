@@ -35,6 +35,9 @@ var fnExample = geneva.run(
       ["!+", "~x", 4]],
     ["!add-four", 10]]);
 
+// Filter to return all even values
+var filtered = geneva.run(["!filter", "~even?", [1, 2, 3, 4, 10, 11]]);
+
 // Solve FizzBuzz
 var fizzBuzz = geneva.run(
   ["!map",
