@@ -263,8 +263,8 @@ describe("Geneva Core", function() {
       });
     });
 
-    describe("reduce", function() {
-      it("should reduce to a function", function() {
+    describe("filter", function() {
+      it("should filter an array", function() {
         var even = geneva.run(
           ["!filter", "~even?", [1, 2, 3, 4, 10, 11]]);
         expect(even).to.eql([2, 4, 10]);
