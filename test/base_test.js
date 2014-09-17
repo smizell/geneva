@@ -300,6 +300,38 @@ describe("Geneva Core", function() {
         });
       });
     });
+
+    describe("get-in", function() {
+      it("should get nested values", function() {
+        var value = geneva.run(
+          ["!do",
+            ["!def", "x", [{ foo: 1, bar: 2}]],
+            ["!get-in", "~x", [0, "foo"]]])
+        expect(value).to.equal(1);
+      });
+    });
+
+    describe("assoc-in", function() {
+      it("should set nested values in an array", function() {
+        var value = geneva.run(
+          ["!do",
+            ["!def", "x", [{ foo: 1, bar: 2}]],
+            ["!def", "newX",
+              ["!assoc-in", "~x", [0, "foo"], 5]],
+            "~newX"]);
+        expect(value[0].foo).to.equal(5);
+      });
+
+      it("should set nested values in an object", function() {
+        var value = geneva.run(
+          ["!do",
+            ["!def", "x", { foo: [1, { boo: 5}, 3]}],
+            ["!def", "newX",
+              ["!assoc-in", "~x", ["foo", 1, "boo"], 10]],
+            "~newX"]);
+        expect(value.foo[1].boo).to.equal(10);
+      });
+    });
   });
 
   describe("shortcuts", function() {

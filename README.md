@@ -69,6 +69,8 @@ var fizzBuzz = geneva.run(
 * map
 * reduce
 * filter
+* assoc-in
+* get-in
 * concat
 * range
 * zero?
