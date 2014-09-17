@@ -331,6 +331,16 @@ describe("Geneva Core", function() {
             "~newX"]);
         expect(value.foo[1].boo).to.equal(10);
       });
+
+      it("should not change the original", function() {
+        var value = geneva.run(
+          ["!do",
+            ["!def", "x", { foo: [1, { boo: 5}, 3]}],
+            ["!def", "newX",
+              ["!assoc-in", "~x", ["foo", 1, "boo"], 10]],
+            "~x"]);
+        expect(value.foo[1].boo).to.equal(5);
+      });
     });
   });
 
