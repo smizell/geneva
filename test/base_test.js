@@ -99,6 +99,25 @@ describe("Geneva Core", function() {
         expect(fn).to.eql(10);
       });
     });
+
+    describe("let", function() {
+      it("should provide a local scope", function() {
+        var letTest = geneva.run(
+          ["!let", ["x", 5,
+                    "y", 10], 
+            ["!+", "~x", "~y"]]);
+        expect(letTest).to.equal(15);
+      });
+
+      it("should process multiple lines", function() {
+        var letTest = geneva.run(
+          ["!let", ["x", 5,
+                    "y", 10], 
+            ["!+", "~x", "~y"],
+            ["!-", "~y", "~x"]]);
+        expect(letTest).to.equal(5);
+      });
+    });
   });
 
   describe("math", function() {
@@ -280,6 +299,26 @@ describe("Geneva Core", function() {
       it("should return the correct value", function() {
         expect(geneva.run(["!zero?", 0])).to.be.true;
         expect(geneva.run(["!zero?", 1])).to.be.false;
+      });
+    });
+  });
+
+  describe("string", function() {
+    describe("str", function() {
+      it("should concat a string", function() {
+        expect(geneva.run(["!str", "Hello", " ", "World"])).to.equal("Hello World");
+      });
+    });
+
+    describe("join", function() {
+      it("should join an array", function() {
+        expect(geneva.run(["!join", ",", [1, 2, 3]])).to.equal("1,2,3");
+      });
+    });
+
+    describe("split", function() {
+      it("should split an array", function() {
+        expect(geneva.run(["!split", "1,2,3", ","])).to.eql(["1", "2", "3"]);
       });
     });
   });
