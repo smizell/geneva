@@ -23,6 +23,29 @@ describe("Geneva Core", function() {
         var val = geneva.run([1, 2, 3]);
         expect(val).to.eql([1, 2, 3])
       });
+
+      it("should run code within it", function() {
+        var val = geneva.run(
+          ["!do",
+            ["!def", "a", 2],
+            [1, "~a", 3]]);
+        expect(val).to.eql([1, 2, 3])
+      });
+    });
+
+    describe("object", function() {
+      it("should return a normal object", function() {
+        var val = geneva.run({ foo: "a", bar: "b" });
+        expect(val).to.eql({ foo: "a", bar: "b" });
+      });
+
+      it.only("should run code within it", function() {
+        var val = geneva.run(
+          ["!do",
+            ["!def", "a", 2],
+            { foo: "~a", bar: [1, "~a", 3] }]);
+        expect(val).to.eql({ foo: 2, bar: [1, 2, 3]})
+      });
     });
 
     describe("identity", function() {
