@@ -82,6 +82,13 @@ describe("Geneva Core", function() {
                    [1, 2, 3]]);
         expect(fn).to.eql([2, 3, 4]);
       });
+
+      it("should destructure arguments", function() {
+        var fn = geneva.run(
+          ["!fn", ["val", ["min", "max"]],
+            "~max"]);
+        expect(fn.call([4, [1, 10]], geneva, Scope())).to.eql(10);
+      });
     });
 
     describe("do", function() {
