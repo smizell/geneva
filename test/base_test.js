@@ -39,7 +39,7 @@ describe("Geneva Core", function() {
         expect(val).to.eql({ foo: "a", bar: "b" });
       });
 
-      it.only("should run code within it", function() {
+      it("should run code within it", function() {
         var val = geneva.run(
           ["!do",
             ["!def", "a", 2],
@@ -141,6 +141,23 @@ describe("Geneva Core", function() {
         expect(letTest).to.equal(5);
       });
     });
+
+    describe("eval", function() {
+      it("should execute an array", function() {
+        expect(geneva.run(["!eval", ["+", 2, 4]])).to.equal(6);
+      });
+    });
+
+    describe("->>", function() {
+      it("should thread the expression through the forms", function() {
+        var forms = geneva.run(
+          ["!->>", [1, 2, 3],
+                   ["!map", "~inc"],
+                   ["!map", "~inc"],
+                   ["!concat", [0, 2]]]);
+        expect(forms).to.eql([0, 2, 3, 4, 5])
+      });
+    });
   });
 
   describe("math", function() {
@@ -172,6 +189,49 @@ describe("Geneva Core", function() {
       it("should subtract multiple values", function() {
         var three = geneva.run(["!-", 10, 5, 2]);
         expect(three).to.equal(3);
+      });
+    });
+
+    describe("*", function() {
+      it("should multiply numbers", function() {
+        var product = geneva.run(["!*", 10, 5, 2]);
+        expect(product).to.equal(100);
+      });
+    });
+
+    describe("/", function() {
+      it("should divide two numbers", function() {
+        expect(geneva.run(["!/", 10, 5])).to.equal(2);
+      });
+    });
+
+    describe(">", function() {
+      it("should tell if one number is greater than the other", function() {
+        expect(geneva.run(["!>", 10, 5])).to.true;
+        expect(geneva.run(["!>", 10, 15])).to.false;
+      });
+    });
+
+    describe(">=", function() {
+      it("should tell if one number is greater than or equal the other", function() {
+        expect(geneva.run(["!>=", 10, 5])).to.true;
+        expect(geneva.run(["!>=", 10, 10])).to.true;
+        expect(geneva.run(["!>=", 10, 11])).to.false;
+      });
+    });
+
+    describe("<", function() {
+      it("should tell if one number is greater than the other", function() {
+        expect(geneva.run(["!<", 5, 10])).to.true;
+        expect(geneva.run(["!<", 20, 15])).to.false;
+      });
+    });
+
+    describe(">=", function() {
+      it("should tell if one number is greater than or equal the other", function() {
+        expect(geneva.run(["!<=", 5, 10])).to.true;
+        expect(geneva.run(["!<=", 10, 10])).to.true;
+        expect(geneva.run(["!<=", 20, 11])).to.false;
       });
     });
 
@@ -269,6 +329,20 @@ describe("Geneva Core", function() {
         expect(condTest).to.equal("SUCCESS");
       });
     });
+
+    describe("and", function() {
+      it("should evaluate each item to see if it's true", function() {
+        expect(geneva.run(["!and", ["!=", 1, 1], true])).to.be.true;
+        expect(geneva.run(["!and", true, ["!=", 1, 2], true])).to.be.false;
+      });
+    });
+
+    describe("or", function() {
+      it("should evaluate each item to see if it's true", function() {
+        expect(geneva.run(["!or", ["!=", 1, 1], false])).to.be.true;
+        expect(geneva.run(["!or", false, ["!=", 1, 2], false])).to.be.false;
+      });
+    });
   });
 
   describe("functional", function() {
@@ -283,6 +357,11 @@ describe("Geneva Core", function() {
       it("should reduce to a function", function() {
         var sum = geneva.run(["!reduce", "~+", [1, 2, 3]]);
         expect(sum).to.eql(6);
+      });
+
+      it("should accept a first value", function() {
+        var sum = geneva.run(["!reduce", "~+", 10, [1, 2, 3]]);
+        expect(sum).to.equal(16);
       });
     });
 
@@ -427,6 +506,107 @@ describe("Geneva Core", function() {
       it("should tell if a string contains a substring", function() {
         expect(geneva.run(["!contains?", "World", "ld"])).to.be.true;
         expect(geneva.run(["!contains?", "World", "Hello"])).to.be.false;
+      });
+    });
+
+    describe("true?", function() {
+      it("should return correct true/false values", function() {
+        expect(geneva.run(["!true?", ["!=", 1, 1]])).to.be.true;
+        expect(geneva.run(["!true?", false])).to.be.false;
+      });
+    });
+
+    describe("false?", function() {
+      it("should return correct true/false values", function() {
+        expect(geneva.run(["!false?", ["!=", 1, 1]])).to.be.false;
+        expect(geneva.run(["!false?", false])).to.be.true;
+      });
+    });
+
+    describe("empty?", function() {
+      it("should tell if an array is empty or not", function() {
+        expect(geneva.run(["!empty?", []])).to.be.true;
+        expect(geneva.run(["!empty?", [1, 2]])).to.be.false;
+      });
+    });
+
+    describe("every?", function() {
+      it("should return true if all pass logical test", function() {
+        expect(geneva.run(["!every?", "~even?", [2, 4, 6]])).to.be.true;
+        expect(geneva.run(["!every?", "~even?", [2, 5, 6]])).to.be.false;
+      });
+    });
+
+    describe("nil?", function() {
+      it("should define whether a value is nil or not", function() {
+        expect(geneva.run(["!nil?", null])).to.be.true;
+        expect(geneva.run(["!nil?", undefined])).to.be.false;
+        expect(geneva.run(["!nil?", 1])).to.be.false;
+      });
+    });
+  });
+
+  describe("arrays", function() {
+    describe("first", function() {
+      it("should return the first of an array", function() {
+        expect(geneva.run(["!first", [3, 4, 5]])).to.be.equal(3);
+      });
+    });
+
+    describe("nth", function() {
+      it("should return the value at the index", function() {
+        expect(geneva.run(["!nth", [3, 4, 5], 1])).to.be.equal(4);
+      });
+    });
+
+    describe("conj", function() {
+      it("should combine arrays", function() {
+        expect(geneva.run(["!conj", [1, 2, 3], 4, 5])).to.be.eql([1, 2, 3, 4, 5]);
+        expect(geneva.run(["!conj", null, 5])).to.be.eql([5]);
+      });
+    });
+
+    describe("drop", function() {
+      it("should drop n number of items", function() {
+        expect(geneva.run(["!drop", 2, [1, 2, 3, 4]])).to.be.eql([3, 4]);
+        expect(geneva.run(["!drop", 5, [1, 2, 3, 4]])).to.be.eql([]);
+      });
+    });
+  });
+
+  describe("type checking", function() {
+    describe("array?", function() {
+      it("should tell if an item is an array or not", function() {
+        expect(geneva.run(["!array?", [1, 2]])).to.be.true;
+        expect(geneva.run(["!array?", 4])).to.be.false;
+      });
+    });
+
+    describe("string?", function() {
+      it("should tell if an item is an string or not", function() {
+        expect(geneva.run(["!string?", "Hello World"])).to.be.true;
+        expect(geneva.run(["!string?", 4])).to.be.false;
+      });
+    });
+
+    describe("object?", function() {
+      it("should tell if an item is an object or not", function() {
+        expect(geneva.run(["!object?", { foo: "bar" }])).to.be.true;
+        expect(geneva.run(["!object?", 4])).to.be.false;
+      });
+    });
+
+    describe("number?", function() {
+      it("should tell if an item is an string or not", function() {
+        expect(geneva.run(["!number?", 4])).to.be.true;
+        expect(geneva.run(["!number?", "foo bar"])).to.be.false;
+      });
+    });
+
+    describe("bool?", function() {
+      it("should tell if an item is an boolean or not", function() {
+        expect(geneva.run(["!bool?", true])).to.be.true;
+        expect(geneva.run(["!bool?", "foo bar"])).to.be.false;
       });
     });
   });
