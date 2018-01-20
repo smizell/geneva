@@ -19,5 +19,12 @@ describe('Geneva', () => {
         expect(result).to.equal(42);
       });
     });
+
+    context('when a function that does not exist', () => {
+      it('throws an error', () => {
+        const geneva = new Geneva();
+        expect(() => geneva.run(['!foo', 'bar'])).to.throw;
+      });
+    });
   });
 });
