@@ -50,12 +50,29 @@ describe('Lambda', () => {
   });
 
   context('when a more complex lambda is defined', () => {
-    it.only('returns the correct value', () => {
+    it('returns the correct value for nested calls', () => {
       const geneva = new Geneva();
       const result = geneva.run( 
         ['!do',
           [['!lambda', [],
             [['!lambda', ['x'], '~x'], 42]]]]
+      );
+      expect(result).to.equal(42)
+    });
+
+    it('returns handles scope correctly', () => {
+      const geneva = new Geneva();
+      const result = geneva.run( 
+        ['!do',
+          ['!def', 'x', 42],
+          // Define a nested lambda function
+          ['!def', 'foo',
+            ['!fn', [],
+              [['!fn', [], '~x']]]],
+          // Change the value of x
+          ['!def', 'x', 100],
+          // It should return the original value
+          ['!foo']]
       );
       expect(result).to.equal(42)
     });
