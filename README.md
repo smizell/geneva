@@ -46,7 +46,8 @@ Geneva has limited support of functions (also called lambdas in this project). A
 ```javascript
 ['!do',
   ['!def', 'square',
-    ['!fn', ['n'], ['!multiply', '~n', '~n']]],
+    ['!fn', ['n'],
+      ['!multiply', '~n', '~n']]],
   ['!square', 4]]
 ```
 
@@ -55,7 +56,8 @@ This defines a function as a variable `square` and then calls that function. The
 Functions can also be invoked immediately by making them the first item in an array.
 
 ```javascript
-[['!fn', ['n'], ['!multiply', '~n', '~n']], 4] // returns 16
+// returns 16
+[['!fn', ['n'], ['!multiply', '~n', '~n']], 4] 
 ```
 
 Lastly, the `fn` function is aliased as `lambda` if that works better for you.
