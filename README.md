@@ -3,7 +3,7 @@ Geneva
 
 This is a weird and quirky Lisp-flavored JSON that uses Lodash for the standard library. This is just for fun, so please do not take this too seriously!
 
-**Beware**: there could be gotchas and safety issues with running code like this, especially if you allow outside users to run code through this on your system. Ideally, it would be great to ensure this code is safe from outside users, but this is unknown. For real, please do not use this in anything serious.
+**Beware**: there could be gotchas and safety issues with running code like this in a production environment, **especially** if you allow outside users to run their own Geneva code through this on your system. Ideally, it would be great to ensure this code is safe from outside users, but this is unknown. For real, please do not use this for anything other than fun.
 
 ## Why do this?
 
