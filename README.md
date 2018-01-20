@@ -123,3 +123,8 @@ geneva.run(['!sum', [1, 2]]); // returns 3
 
 If you are using JSON, you'll need to parse it first.
 
+## REPL
+
+There is a REPL to use by running the `geneva` command. This will give you a prompt where you can directly type in Geneva code. Use `.help` to see other available commands.
+
+

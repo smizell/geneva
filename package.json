@@ -6,6 +6,9 @@
   "scripts": {
     "test": "mocha"
   },
+  "bin": {
+    "geneva": "bin/repl.js"
+  },
   "keywords": [
     "JSON",
     "Lisp"
