@@ -7,7 +7,7 @@ This is a weird and quirky Lisp-flavored JSON that uses Lodash for the standard 
 
 ## Why do this?
 
-I did this for for fun. I had this thought, that since JSON parsers are everywhere, what if you turned JSON into its own little language? To make a usable language, you need a nice standard library, and Lodash is the perfect for that. Geneva mashes that all together to make a simple way to define Lodash code as JSON that can be passed around and evaled as desired.
+I had this thought, that since JSON parsers are everywhere, what if you turned JSON into its own little language? To make a usable language, you need a nice standard library, and Lodash is the perfect for that. Geneva mashes that all together to make a simple way to define Lodash code as JSON that can be passed around and evaled as desired.
 
 So it's just for fun. But it's not too far off from tools like CloudFormation or Azure's ARM that put a bunch of code-like structure in YAML. Maybe this will spark some ideas of creating a little language that can be used for writing and processing configurations.
 
