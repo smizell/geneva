@@ -9,11 +9,10 @@ describe('Lambda', () => {
       const result = geneva.run(
         ['!do',
           ['!def', 'foo',
-            ['!lambda', ['a', 'b'],
-              ['!sum', ['~a', '~b']]]],
-          ['!foo', 5, 6]]
+            ['!lambda', ['x'], '~x']],
+          ['!foo', 5]]
       );
-      expect(result).to.equal(11);
+      expect(result).to.equal(5);
     });
   });
 
@@ -58,6 +57,15 @@ describe('Lambda', () => {
             [['!lambda', ['x'], '~x'], 42]]]]
       );
       expect(result).to.equal(42)
+    });
+
+    it('passes along scope to other functions', () => {
+      const geneva = new Geneva();
+      const result = geneva.run( 
+        ['!map', [1, 2, 3], ['!fn', ['n'],
+          ['!multiply', '~n', 10]]]
+      );
+      expect(result).to.deep.equal([10, 20, 30])
     });
 
     it('returns handles scope correctly', () => {
