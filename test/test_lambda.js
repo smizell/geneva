@@ -48,4 +48,16 @@ describe('Lambda', () => {
       });
     });
   });
+
+  context('when a more complex lambda is defined', () => {
+    it.only('returns the correct value', () => {
+      const geneva = new Geneva();
+      const result = geneva.run( 
+        ['!do',
+          [['!lambda', [],
+            [['!lambda', ['x'], '~x'], 42]]]]
+      );
+      expect(result).to.equal(42)
+    });
+  });
 });
