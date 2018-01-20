@@ -89,8 +89,10 @@ You can evaluate quoted code as well.
 
 ## Install
 
+This is currently in alpha for 1.0.0. There is an older version of Geneva that does not use Lodash and is not as easy to use.
+
 ```shell
-npm install geneva
+npm install geneva@next
 ```
 
 ## Usage
