@@ -60,6 +60,15 @@ Functions can also be invoked immediately by making them the first item in an ar
 [['!fn', ['n'], ['!multiply', '~n', '~n']], 4] 
 ```
 
+There is a `defn` shortcut for defining functions more easily.
+
+```javascript
+['!do',
+  ['!defn', 'square', ['n'],
+    ['!multiply', '~n', '~n']],
+  ['!square', 4]]
+```
+
 Lastly, the `fn` function is aliased as `lambda` if that works better for you.
 
 ### Conditionals
