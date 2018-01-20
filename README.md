@@ -27,7 +27,7 @@ lodash.sum([1, 2]);
 
 Any Lodash function is available in the code.
 
-Geneva also allows for definig variables and referencing those variables throughout your code. This example shows code that defines a variable and then uses that variable in the next call. The way Geneva knows that a string is a reference is by appending the tilde (~) to the variable name.
+Geneva also allows for defining variables and referencing those variables throughout your code. This example shows code that defines a variable and then uses that variable in the next call. The way Geneva knows that a string is a reference is by appending the tilde (~) to the variable name.
 
 ```javascript
 ['!do',
