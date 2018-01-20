@@ -8,7 +8,15 @@ describe('Geneva', () => {
       it('returns the output', () => {
         const geneva = new Geneva();
         const result = geneva.run(['!identity', 42]);
-        expect(result.output).to.equal(42);
+        expect(result).to.equal(42);
+      });
+    });
+
+    context('when given nested code', () => {
+      it('returns the output', () => {
+        const geneva = new Geneva();
+        const result = geneva.run(['!identity', ['!identity', 42]]);
+        expect(result).to.equal(42);
       });
     });
   });
