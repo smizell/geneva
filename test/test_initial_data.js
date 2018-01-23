@@ -32,13 +32,13 @@ describe('Initial Data', () => {
       const geneva = new Geneva({
         forms: {
           foo: (runner, args) => {
-            return `Hello, ${args[0]}`;
+            const name = runner.run(args[0]);
+            return `Hello, ${name}`;
           }
         }
       });
-      const result = geneva.run(['!foo', 'bar']);
+      const result = geneva.run(['!foo', ['!join', ['b', 'a', 'r'], '']]);
       expect(result).to.equal('Hello, bar');
-      
     });
   });
 });

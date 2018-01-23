@@ -123,6 +123,51 @@ geneva.run(['!sum', [1, 2]]); // returns 3
 
 If you are using JSON, you'll need to parse it first.
 
+### Initial Data
+
+You can pass initial data into Geneva in order to set up the scope before your code ever runs.
+
+```javascript
+const geneva = new Geneva({
+  initial: {
+    foo: 'bar'
+  }
+});
+geneva.run('~foo'); // returns bar
+```
+
+Plain JavaScript functions may also be passed in and called directly in the code.
+
+```javascript
+const geneva = new Geneva({
+  initial: {
+    hello: (name) => `Hello, ${name}`
+  }
+});
+geneva.run(['!hello', 'World']); // return Hello, World
+```
+
+If you want to be able to evaluate code at runtime in your own function, you can pass in a special form to do so. This will pass in the raw code to your function along with the interpreter for the given scope. Note that the interpreter you get will be scoped to where the code is called, so the context will affect the scope.
+
+This essentially allows you to modify the way the code itself executes. With great power comes great responsibility.
+
+```javascript
+const geneva = new Geneva({
+  forms: {
+    hello: (runner, args) => {
+      // Evaluate the code passed to it
+      const name = runner.run(args[0]);
+      return `Hello, ${name}`;
+    }
+  }
+});
+geneva.run(
+  ['!hello', 
+    ['!join', ['b', 'a', 'r'], '']]); // return Hello, bar
+```
+
+Lastly, if you want to your own runtime to play with, you can call `geneva.buildRuntime()`, which takes the same options as `geneva.run`. This will give you access to the runtime to inspect and change the scope.
+
 ## REPL
 
 There is a REPL to use by running the `geneva` command. This will give you a prompt where you can directly type in Geneva code. Use `.help` to see other available commands.
