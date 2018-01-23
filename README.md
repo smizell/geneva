@@ -98,6 +98,15 @@ You can evaluate quoted code as well.
   ['!quote', ['!sum', [1, 2]]]]
 ```
 
+### Read String
+
+You can also pass in JSON to the `readString` function to evaluate code from a string. This also allows you to build code. Note that the value for `readString` MUST be valid JSON because it will be parsed as JSON when the function is run. The function itself will return the parsed value as a `quote` function call.
+
+```javascript
+// This return 42
+['!eval', ['!readString', '["!identity", 42]']]
+```
+
 ## Install
 
 This is currently in alpha for 1.0.0. There is an older version of Geneva that does not use Lodash and is not as easy to use.
