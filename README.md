@@ -147,16 +147,16 @@ const geneva = new Geneva({
 geneva.run(['!hello', 'World']); // return Hello, World
 ```
 
-If you want to be able to evaluate code at runtime in your own function, you can pass in a special form to do so. This will pass in the raw code to your function along with the interpreter for the given scope. Note that the interpreter you get will be scoped to where the code is called, so the context will affect the scope.
+If you want to be able to evaluate code at runtime in your own function, you can pass in a special form to do so. This will pass in the raw code to your function along with the runtime for the given scope. Note that the runtime you get will be scoped to where the code is called, so the context will affect the scope.
 
 This essentially allows you to modify the way the code itself executes. With great power comes great responsibility.
 
 ```javascript
 const geneva = new Geneva({
   forms: {
-    hello: (runner, args) => {
+    hello: (runtime, args) => {
       // Evaluate the code passed to it
-      const name = runner.run(args[0]);
+      const name = runtime.run(args[0]);
       return `Hello, ${name}`;
     }
   }
