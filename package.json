@@ -1,6 +1,6 @@
 {
   "name": "geneva",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0",
   "description": "JSON-Flavored Lisp",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "author": "Stephen Mizell",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "chai": "^4.1.2",
