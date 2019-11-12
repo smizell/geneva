@@ -29,5 +29,5 @@ replServer.defineCommand('refs', {
 });
 
 function genevaEval(cmd, context, filename, callback) {
-  return callback(null, runtime.run(eval(cmd)));
+  return callback(null, runtime.run(JSON.parse(cmd)));
 }
