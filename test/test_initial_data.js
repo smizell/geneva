@@ -22,7 +22,7 @@ describe('Initial Data', () => {
           foo: (name) => `Hello, ${name}`
         }
       });
-      const result = geneva.run(['!foo', 'bar']);
+      const result = geneva.run(['!foo', ['!identity', 'bar']]);
       expect(result).to.equal('Hello, bar');
     });
   });
