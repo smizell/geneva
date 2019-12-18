@@ -1,4 +1,4 @@
-const Geneva = require('../lib/base');
+const { Geneva } = require('../lib/base');
 const chai = require('chai');
 const expect = chai.expect;
 
@@ -9,7 +9,7 @@ describe('Form: if', () => {
         const geneva = new Geneva();
         const result = geneva.run(['!if', false, 'success', 'fail']);
         expect(result).to.equal('fail');
-      }) ;
+      });
     });
   });
 
@@ -19,7 +19,7 @@ describe('Form: if', () => {
         const geneva = new Geneva();
         const result = geneva.run(['!if', true, 42]);
         expect(result).to.equal(42);
-      }) ;
+      });
     });
 
     context('when test is false', () => {
@@ -27,7 +27,7 @@ describe('Form: if', () => {
         const geneva = new Geneva();
         const result = geneva.run(['!if', false, 42]);
         expect(result).to.equal(null);
-      }) ;
+      });
     });
   });
 });

@@ -120,7 +120,7 @@ npm install geneva@next
 You first need a code runner.
 
 ```javascript
-const Geneva = require('geneva');
+const { Geneva } = require('geneva');
 const geneva = new Geneva();
 ```
 

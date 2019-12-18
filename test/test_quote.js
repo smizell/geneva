@@ -1,4 +1,4 @@
-const Geneva = require('../lib/base');
+const { Geneva } = require('../lib/base');
 const chai = require('chai');
 const expect = chai.expect;
 

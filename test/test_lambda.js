@@ -1,4 +1,4 @@
-const Geneva = require('../lib/base');
+const { Geneva } = require('../lib/base');
 const chai = require('chai');
 const expect = chai.expect;
 
@@ -17,7 +17,7 @@ describe('Lambda', () => {
   });
 
   context('global scope', () => {
-    context('when a variable is defined first', () =>{
+    context('when a variable is defined first', () => {
       it('should be accessible', () => {
         const geneva = new Geneva();
         const result = geneva.run(
@@ -31,7 +31,7 @@ describe('Lambda', () => {
       });
     });
 
-    context('when a variable is defined after', () =>{
+    context('when a variable is defined after', () => {
       it('should not be accessible', () => {
         const geneva = new Geneva();
         const runner = () => {
@@ -51,7 +51,7 @@ describe('Lambda', () => {
   context('when a more complex lambda is defined', () => {
     it('returns the correct value for nested calls', () => {
       const geneva = new Geneva();
-      const result = geneva.run( 
+      const result = geneva.run(
         ['!do',
           [['!lambda', [],
             [['!lambda', ['x'], '~x'], 42]]]]
@@ -61,7 +61,7 @@ describe('Lambda', () => {
 
     it('passes along scope to other functions', () => {
       const geneva = new Geneva();
-      const result = geneva.run( 
+      const result = geneva.run(
         ['!map', [1, 2, 3], ['!fn', ['n'],
           ['!multiply', '~n', 10]]]
       );
@@ -70,7 +70,7 @@ describe('Lambda', () => {
 
     it('returns handles scope correctly', () => {
       const geneva = new Geneva();
-      const result = geneva.run( 
+      const result = geneva.run(
         ['!do',
           ['!def', 'x', 42],
           // Define a nested lambda function
