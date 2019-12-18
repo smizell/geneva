@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 const repl = require("repl");
-const Geneva = require('../lib/base');
+const { Geneva } = require('../lib/base');
 
 const geneva = new Geneva();
 let runtime = geneva.buildRuntime();
