@@ -28,7 +28,7 @@ describe("Initial Data", () => {
   });
 
   context("when a form is given", () => {
-    it("evalutes correctly", () => {
+    it("evaluates correctly", () => {
       const geneva = new Geneva({
         forms: {
           foo: (runner, args) => {
