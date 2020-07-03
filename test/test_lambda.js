@@ -15,6 +15,22 @@ describe("Lambda", () => {
     });
   });
 
+  context("when defining a mult-line function", function () {
+    it("returns the last expression", function () {
+      const geneva = new Geneva();
+      const result = geneva.run([
+        "!do",
+        [
+          "!def",
+          "foo",
+          ["!lambda", ["x"], ["!def", "n", 4], ["!multiply", "~x", "~n"]],
+        ],
+        ["!foo", 5],
+      ]);
+      expect(result).to.equal(20);
+    });
+  });
+
   context("global scope", () => {
     context("when a variable is defined first", () => {
       it("should be accessible", () => {
