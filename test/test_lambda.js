@@ -15,7 +15,7 @@ describe("Lambda", () => {
     });
   });
 
-  context("when defining a mult-line function", function () {
+  context("when defining a multi-line function", function () {
     it("returns the last expression", function () {
       const geneva = new Geneva();
       const result = geneva.run([
