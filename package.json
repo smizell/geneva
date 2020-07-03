@@ -16,12 +16,11 @@
   "author": "Stephen Mizell",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.15",
     "ramda": "^0.27.0",
     "ramda-adjunct": "^2.27.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^5.0.0"
+    "mocha": "^8.0.1"
   }
 }
