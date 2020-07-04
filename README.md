@@ -14,8 +14,9 @@ So it's just for fun. But it's not too far off from tools like CloudFormation or
 
 Geneva allows you to pass in JSON and process that JSON as if it were code. The way that it knows something is code is by looking for arrays (i.e. lists) where the first item in the list is callable. Something is callable when it has a bang (!) as the first character. In the example below, you see that `sum` is the function and `[1, 2]` is the single argument passed to the function.
 
-```javascript
-["!sum", [1, 2]];
+```yml
+# YAML example
+fn:sum: [1, 2]
 ```
 
 This is using Ramda's `sum` function, so it is the same as:
@@ -28,8 +29,11 @@ Any Ramda function is available in the code.
 
 Geneva also allows for defining variables and referencing those variables throughout your code. This example shows code that defines a variable and then uses that variable in the next call. The way Geneva knows that a string is a reference is by appending the tilde (~) to the variable name.
 
-```javascript
-["!do", ["!def", "x", 10], ["!sum", ["~x", 5]]];
+```yml
+fn:do:
+  - fn:def: [x, 10]
+  - fn:sum: [x, 5]
+# result is 15
 ```
 
 This example used `do`, which is a special function that evaluates everything and returns the value of the last function.
@@ -40,27 +44,27 @@ The reason for appending these special characters is so that plain JSON can be p
 
 Geneva has limited support of functions (also called lambdas in this project). Any function defined will essentially freeze the existing scope and then scope all variables within it during the call. This means that functions cannot see any changes after they are defined, and they cannot make changes to the outer scope when they are called.
 
-```javascript
-[
-  "!do",
-  ["!def", "square", ["!fn", ["n"], ["!multiply", "~n", "~n"]]],
-  ["!square", 4],
-];
+```yml
+fn:do:
+  - fn:def:
+      - square
+      - fn:lambda:
+          - n
+          - fn:multiply: [ref:n, ref:n]
+  - fn:square: [4]
 ```
 
 This defines a function as a variable `square` and then calls that function. The result from this code will be 16.
 
-Functions can also be invoked immediately by making them the first item in an array.
-
-```javascript
-// returns 16
-[["!fn", ["n"], ["!multiply", "~n", "~n"]], 4];
-```
-
 There is a `defn` shortcut for defining functions more easily.
 
-```javascript
-["!do", ["!defn", "square", ["n"], ["!multiply", "~n", "~n"]], ["!square", 4]];
+```yml
+fn:do:
+  - fn:defn:
+      - square
+      - [n]
+      - fn:multiply: [ref:n, ref:n]
+  - fn:square: [4]
 ```
 
 Lastly, the `fn` function is aliased as `lambda` if that works better for you.
@@ -69,8 +73,11 @@ Lastly, the `fn` function is aliased as `lambda` if that works better for you.
 
 You can use an `if` statement in the code.
 
-```javascript
-["!if", true, "Success!", "Fail :("];
+```yml
+fn:if:
+  - true
+  - "Success!"
+  - "Fail :("
 ```
 
 If you leave out the else statement and the condition fails, you will get `null` (sorry).
@@ -79,25 +86,19 @@ If you leave out the else statement and the condition fails, you will get `null`
 
 Code can be "quoted" in the sense that it can be treated as a normal array rather than code. This allows for creating code on the fly (like a macro) if you so choose.
 
-```javascript
-["!quote", ["!sum", [1, 2]]];
-// returns ['!sum', [1, 2]] unevaluated
+```yml
+fn:quote:
+  - fn:sum: [1, 2]
+# returns fn:sum: [1, 2] unevaluated
 ```
 
 You can evaluate quoted code as well.
 
-```javascript
-// returns 3
-["!eval", ["!quote", ["!sum", [1, 2]]]];
-```
-
-### Read String
-
-You can also pass in JSON to the `readString` function to evaluate code from a string. This also allows you to build code. Note that the value for `readString` MUST be valid JSON because it will be parsed as JSON when the function is run. The function itself will return the parsed value as a `quote` function call.
-
-```javascript
-// This return 42
-["!eval", ["!readString", '["!identity", 42]']];
+```yml
+fn:eval:
+  - fn:quote:
+      - fn:add: [1, 2]
+# returns 3
 ```
 
 ## Install
@@ -110,11 +111,13 @@ npm install geneva
 
 ## Usage
 
+**Disclaimer**: The code below uses a different parser than the examples above. This uses the ArrayParser.
+
 You first need a code runner.
 
 ```javascript
 const { Geneva } = require("geneva");
-const geneva = new Geneva();
+const geneva = Geneva.withArrayParser();
 ```
 
 You can then run code as such:
