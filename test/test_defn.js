@@ -5,7 +5,7 @@ const expect = chai.expect;
 describe("Defn", () => {
   context("when called", () => {
     it("returns the correct value", function () {
-      const geneva = new Geneva();
+      const geneva = Geneva.withArrayParser();
       const result = geneva.run([
         "!do",
         ["!defn", "square", ["n"], ["!multiply", "~n", "~n"]],

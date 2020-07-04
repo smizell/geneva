@@ -5,7 +5,7 @@ const expect = chai.expect;
 describe("Lambda", () => {
   context("when a basic lambda is defined", () => {
     it("should be callable", () => {
-      const geneva = new Geneva();
+      const geneva = Geneva.withArrayParser();
       const result = geneva.run([
         "!do",
         ["!def", "foo", ["!lambda", ["x"], "~x"]],
@@ -17,7 +17,7 @@ describe("Lambda", () => {
 
   context("when defining a multi-line function", function () {
     it("returns the last expression", function () {
-      const geneva = new Geneva();
+      const geneva = Geneva.withArrayParser();
       const result = geneva.run([
         "!do",
         [
@@ -34,7 +34,7 @@ describe("Lambda", () => {
   context("global scope", () => {
     context("when a variable is defined first", () => {
       it("should be accessible", () => {
-        const geneva = new Geneva();
+        const geneva = Geneva.withArrayParser();
         const result = geneva.run([
           "!do",
           ["!def", "foo", "bar"],
@@ -47,7 +47,7 @@ describe("Lambda", () => {
 
     context("when a variable is defined after", () => {
       it("should not be accessible", () => {
-        const geneva = new Geneva();
+        const geneva = Geneva.withArrayParser();
         const runner = () => {
           const result = geneva.run([
             "!do",
@@ -63,7 +63,7 @@ describe("Lambda", () => {
 
   context("when a more complex lambda is defined", () => {
     it("returns the correct value for nested calls", () => {
-      const geneva = new Geneva();
+      const geneva = Geneva.withArrayParser();
       const result = geneva.run([
         "!do",
         [["!lambda", [], [["!lambda", ["x"], "~x"], 42]]],
@@ -72,7 +72,7 @@ describe("Lambda", () => {
     });
 
     it("passes along scope to other functions", () => {
-      const geneva = new Geneva();
+      const geneva = Geneva.withArrayParser();
       const result = geneva.run([
         "!map",
         ["!fn", ["n"], ["!multiply", "~n", 10]],
@@ -82,7 +82,7 @@ describe("Lambda", () => {
     });
 
     it("returns handles scope correctly", () => {
-      const geneva = new Geneva();
+      const geneva = Geneva.withArrayParser();
       const result = geneva.run([
         "!do",
         ["!def", "x", 42],
@@ -97,7 +97,7 @@ describe("Lambda", () => {
     });
 
     it("can be passed to other functions", function () {
-      const geneva = new Geneva();
+      const geneva = Geneva.withArrayParser();
       const result = geneva.run([
         "!do",
         ["!defn", "myAdd", ["a", "b"], ["!add", "~a", "~b"]],

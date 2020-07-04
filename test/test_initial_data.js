@@ -5,7 +5,7 @@ const expect = chai.expect;
 describe("Initial Data", () => {
   context("when a value is given", () => {
     it("is accessible at runtime", () => {
-      const geneva = new Geneva({
+      const geneva = Geneva.withArrayParser({
         initial: {
           foo: "bar",
         },
@@ -17,7 +17,7 @@ describe("Initial Data", () => {
 
   context("when a function is given", () => {
     it("is accessible at runtime", () => {
-      const geneva = new Geneva({
+      const geneva = Geneva.withArrayParser({
         initial: {
           foo: (name) => `Hello, ${name}`,
         },
@@ -29,7 +29,7 @@ describe("Initial Data", () => {
 
   context("when a form is given", () => {
     it("evaluates correctly", () => {
-      const geneva = new Geneva({
+      const geneva = Geneva.withArrayParser({
         forms: {
           foo: (runner, args) => {
             const name = runner.run(args[0]);
