@@ -3,7 +3,7 @@ const chai = require("chai");
 const expect = chai.expect;
 
 describe("Defn", () => {
-  context("when used", () => {
+  context("when called", () => {
     it("returns the correct value", function () {
       const geneva = new Geneva();
       const result = geneva.run([

@@ -95,5 +95,15 @@ describe("Lambda", () => {
       ]);
       expect(result).to.equal(42);
     });
+
+    it("can be passed to other functions", function () {
+      const geneva = new Geneva();
+      const result = geneva.run([
+        "!do",
+        ["!defn", "myAdd", ["a", "b"], ["!add", "~a", "~b"]],
+        ["!reduce", "~myAdd", 0, [1, 2, 3]],
+      ]);
+      expect(result).to.equal(6);
+    });
   });
 });
