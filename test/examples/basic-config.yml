@@ -1,8 +1,6 @@
 parameters:
   - name: firstName
-    type: isString
   - name: lastName
-    type: isString
 computed:
   - name: fullName
     code:

@@ -14,7 +14,8 @@ describe("ConfigBuilder", function () {
     });
 
     it("correctly executes", function () {
-      const results = config.run({ firstName: "Jane", lastName: "Doe" });
+      const run = config.build({ firstName: "Jane", lastName: "Doe" });
+      const results = run();
       expect(results.greeting).to.equal("Hello, Jane Doe");
     });
   });
