@@ -7,7 +7,7 @@ computed:
       fn:join:
         - " "
         - [ref:firstName, ref:lastName]
-run:
+definition:
   greeting:
     fn:concat:
       - "Hello, "
