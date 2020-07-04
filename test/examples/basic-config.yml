@@ -3,12 +3,12 @@ parameters:
   - name: lastName
 computed:
   - name: fullName
-    code:
+    compute:
       fn:join:
         - " "
-        - ["~firstName", "~lastName"]
-code:
+        - [ref:firstName, ref:lastName]
+run:
   greeting:
     fn:concat:
       - "Hello, "
-      - ~fullName
+      - ref:fullName
