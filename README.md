@@ -37,6 +37,7 @@ definition:
 You can evaluate this with code like:
 
 ```js
+const { ConfigBuilder } = require("geneva");
 const config = ConfigBuilder.fromYAML(yamlAbove);
 const run = config.build({ firstName: "Jane", lastName: "Doe" });
 const results = run();
