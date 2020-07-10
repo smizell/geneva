@@ -1,12 +1,12 @@
 ## Geneva
 
-Geneva is a way to make ordinary data more dynamic. It provides a way to include code within YAML or JSON documents for the purpose of keeping specifications lightweight yet easily extendible.
+Geneva is a way to make ordinary data more dynamic. It allows you to include code within YAML or JSON documents for the purpose of keeping specifications lightweight yet extensible.
 
-**Beware**: please do not run this code in production settings. This is an experimental library for trying out an idea. If you desire to use this kind of approach, consider testing this extensively and contributing back or writing something that works for you.
+**Beware**: please do not run this code in production settings yet. This is an experimental library for testing out an idea. If you desire to use this kind of approach, consider testing this extensively and contributing back or writing something that works for you.
 
 ## Why do this?
 
-Since JSON parsers are everywhere, what if we turned JSON into its own little language? To make a usable language, we need a standard library, and Ramda is a great fit for that. Geneva mashes JSON/YAML, Lisp, and Ramda together to make a simple way to define Ramda code as JSON/YAML that can be passed around and evaluated as desired.
+Since JSON parsers are everywhere, what if we turned JSON into its own little language? To make a usable language, we need a standard library, and Ramda is a great fit for that. Geneva mashes JSON/YAML and Ramda together to make a simple way to define Ramda code as JSON/YAML that can be passed around and evaluated as desired.
 
 It's just for fun. But it's not too far off from tools like CloudFormation or Azure's ARM that put a bunch of code-like structure in YAML. Maybe this will spark some ideas of creating a little language that can be used for writing and processing configurations.
 
