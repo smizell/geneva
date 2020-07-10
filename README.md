@@ -23,10 +23,7 @@ parameters:
 computed:
   - name: fullName
     compute:
-      fn:reduce:
-        - ref:concat
-        - ""
-        - [ref:firstName, " ", ref:lastName]
+      fn:join: [" ", [ref:firstName, ref:lastName]]
 definition:
   greeting:
     fn:concat:
