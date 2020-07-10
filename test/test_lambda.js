@@ -97,12 +97,23 @@ describe("Lambda", () => {
     });
 
     it("can be passed to other functions", function () {
-      const geneva = Geneva.withArrayParser();
-      const result = geneva.run([
-        "!do",
-        ["!defn", "myAdd", ["a", "b"], ["!add", "~a", "~b"]],
-        ["!reduce", "~myAdd", 0, [1, 2, 3]],
-      ]);
+      const geneva = new Geneva();
+      const result = geneva.run({
+        "fn:do": [
+          {
+            "fn:defn": [
+              "myAdd",
+              ["a", "b"],
+              {
+                "fn:add": ["ref:a", "ref:b"],
+              },
+            ],
+          },
+          {
+            "fn:reduce": ["ref:myAdd", 0, [1, 2, 3]],
+          },
+        ],
+      });
       expect(result).to.equal(6);
     });
   });
