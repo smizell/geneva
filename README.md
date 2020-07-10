@@ -1,18 +1,53 @@
 ## Geneva
 
-This is a weird and quirky Lisp-flavored JSON that uses Ramda for the standard library. This is just for fun, so please do not take this too seriously!
+Geneva is a way to make ordinary data more dynamic. It provides a way to include code within YAML or JSON documents for the purpose of keeping specifications lightweight yet easily extendible.
 
-**Beware**: there could be gotchas and safety issues with running code like this in a production environment, **especially** if you allow outside users to run their own Geneva code through this on your system. Ideally, it would be great to ensure this code is safe from outside users, but this is unknown. For real, please do not use this for anything other than fun.
+**Beware**: please do not run this code in production settings. This is an experimental library for trying out an idea. If you desire to use this kind of approach, consider testing this extensively and contributing back or writing something that works for you.
 
 ## Why do this?
 
-I had this thought, that since JSON parsers are everywhere, what if you turned JSON into its own little language? To make a usable language, you need a nice standard library, and Ramda is the perfect fit for that. Geneva mashes JSON, Lisp, and Ramda together to make a simple way to define Ramda code as JSON that can be passed around and evaluated as desired.
+Since JSON parsers are everywhere, what if we turned JSON into its own little language? To make a usable language, we need a standard library, and Ramda is a great fit for that. Geneva mashes JSON/YAML, Lisp, and Ramda together to make a simple way to define Ramda code as JSON/YAML that can be passed around and evaluated as desired.
 
-So it's just for fun. But it's not too far off from tools like CloudFormation or Azure's ARM that put a bunch of code-like structure in YAML. Maybe this will spark some ideas of creating a little language that can be used for writing and processing configurations.
+It's just for fun. But it's not too far off from tools like CloudFormation or Azure's ARM that put a bunch of code-like structure in YAML. Maybe this will spark some ideas of creating a little language that can be used for writing and processing configurations.
+
+## Making Specifications Dynamic
+
+One main benefit of Geneva is that it can make static specifications dynamic. Instead of bloating a specification with ways to define variables, reference those variables, or do operations like join strings, use Geneva to provide all of them on top of a specification.
+
+The example below defines parameters, computed values, and finally passes them all to the `definition`. This definition could be OpenAPI, AsyncAPI, or any other JSON/YAML-based specification.
+
+```yml
+parameters:
+  - name: firstName
+  - name: lastName
+computed:
+  - name: fullName
+    compute:
+      fn:reduce:
+        - ref:concat
+        - ""
+        - [ref:firstName, " ", ref:lastName]
+definition:
+  greeting:
+    fn:concat:
+      - "Hello, "
+      - ref:fullName
+```
+
+You can evaluate this with code like:
+
+```js
+const config = ConfigBuilder.fromYAML(yamlAbove);
+const run = config.build({ firstName: "Jane", lastName: "Doe" });
+const results = run();
+// results is equal to { "greeting": "Hello, Jane Doe" }
+```
 
 ## Language Overview
 
-Geneva allows you to pass in JSON and process that JSON as if it were code. The way that it knows something is code is by looking for arrays (i.e. lists) where the first item in the list is callable. Something is callable when it has a bang (!) as the first character. In the example below, you see that `sum` is the function and `[1, 2]` is the single argument passed to the function.
+Geneva allows you to pass in data and process that data as if it were code. Geneva looks for objects with one key that is the function name prefixed with "fn:" and an array of arguments to pass to the array.
+
+For example, to call the `sum` function with `1` and `2` as the arguments, do something like this:
 
 ```yml
 # YAML example
@@ -27,18 +62,18 @@ R.sum([1, 2]);
 
 Any Ramda function is available in the code.
 
-Geneva also allows for defining variables and referencing those variables throughout your code. This example shows code that defines a variable and then uses that variable in the next call. The way Geneva knows that a string is a reference is by appending the tilde (~) to the variable name.
+Geneva also allows for defining variables and referencing those variables throughout your code. This example shows code that defines a variable and then uses that variable in the next call. The way Geneva knows that a string is a reference is by prepending "ref:" to the variable name.
 
 ```yml
 fn:do:
   - fn:def: [x, 10]
-  - fn:sum: [x, 5]
+  - fn:sum: [ref:x, 5]
 # result is 15
 ```
 
 This example used `do`, which is a special function that evaluates everything and returns the value of the last function.
 
-The reason for appending these special characters is so that plain JSON can be passed in. This means that you could have code as values in an object, even deeply nested.
+The reason for appending these special characters is so that plain data can be passed in. This means that it can evaluate code in deeply-nested objects.
 
 ### Functions
 
@@ -66,8 +101,6 @@ fn:do:
       - fn:multiply: [ref:n, ref:n]
   - fn:square: [4]
 ```
-
-Lastly, the `fn` function is aliased as `lambda` if that works better for you.
 
 ### Conditionals
 
@@ -111,22 +144,21 @@ npm install geneva
 
 ## Usage
 
-**Disclaimer**: The code below uses a different parser than the examples above. This uses the ArrayParser.
-
 You first need a code runner.
 
 ```javascript
 const { Geneva } = require("geneva");
-const geneva = Geneva.withArrayParser();
+const geneva = new Geneva();
 ```
 
 You can then run code as such:
 
 ```javascript
-geneva.run(["!sum", [1, 2]]); // returns 3
+// returns 3
+geneva.run({ "fn:sum": [1, 2] });
 ```
 
-If you are using JSON, you'll need to parse it first.
+If you are using JSON or YAML, you'll need to parse it first.
 
 ### Initial Data
 
@@ -138,7 +170,7 @@ const geneva = new Geneva({
     foo: "bar",
   },
 });
-geneva.run("~foo"); // returns bar
+geneva.run("ref:foo"); // returns bar
 ```
 
 Plain JavaScript functions may also be passed in and called directly in the code.
@@ -149,7 +181,7 @@ const geneva = new Geneva({
     hello: (name) => `Hello, ${name}`,
   },
 });
-geneva.run(["!hello", "World"]); // return Hello, World
+geneva.run({ "fn:hello": ["World"] }); // return Hello, World
 ```
 
 If you want to be able to evaluate code at runtime in your own function, you can pass in a special form to do so. This will pass in the raw code to your function along with the runtime for the given scope. Note that the runtime you get will be scoped to where the code is called, so the context will affect the scope.
@@ -166,11 +198,16 @@ const geneva = new Geneva({
     },
   },
 });
-geneva.run(["!hello", ["!join", "", ["b", "a", "r"]]]); // return Hello, bar
+// return Hello, bar
+geneva.run({
+  "fn:hello": {
+    "fn:join": ["b", "a", "r"],
+  },
+});
 ```
 
 Lastly, if you want to your own runtime to play with, you can call `geneva.buildRuntime()`, which takes the same options as `geneva.run`. This will give you access to the runtime to inspect and change the scope.
 
 ## REPL
 
-There is a REPL to use by running the `geneva` command. This will give you a prompt where you can directly type in Geneva code. Use `.help` to see other available commands.
+There is a REPL to use by running the `geneva` command. This will give you a prompt where you can directly type YAMP in Geneva code. Use `.help` to see other available commands.
