@@ -13,4 +13,6 @@ jobs:
       uses: actions/setup-node@v2.1.1
       with:
         node-version: "12.x"
+    - run: npm ci
+    - run: npm i mocha -g
     - run: npm test
