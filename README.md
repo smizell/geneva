@@ -168,6 +168,16 @@ fn:do:
 
 In this example, the `my-code.yml` will have access to the `name` value.
 
+### Reading a file
+
+Sometimes you just want to pull something out of a file. You can do this with `readFile`.
+
+```yml
+fn:readFile: ./my-file.txt
+```
+
+This does not execute the file or render as a template.
+
 ## Install
 
 This is currently in alpha for 1.0.0. There is an older version of Geneva that does not use Ramda and is not as easy to use.
