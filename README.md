@@ -146,6 +146,18 @@ fn:do:
 
 Check out the [Mustache manual](https://mustache.github.io/) for more information on using Mustache templates.
 
+### Including other files
+
+You can use the `include` function to pull in a file and execute it in the current scope. It's expecting a YAML file. It will load it, parse it, then execute it.
+
+```yml
+fn:do:
+  - fn:def: [name, Jane Doe]
+  - fn:include: ./my-code.yml
+```
+
+In this example, the `my-code.yml` will have access to the `name` value.
+
 ## Install
 
 This is currently in alpha for 1.0.0. There is an older version of Geneva that does not use Ramda and is not as easy to use.
