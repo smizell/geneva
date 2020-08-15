@@ -18,5 +18,13 @@ describe("ConfigBuilder", function () {
       const results = run();
       expect(results.greeting).to.equal("Hello, Jane Doe");
     });
+
+    it("throws with bad values", function () {
+      function runner() {
+        const run = config.build({ firstName: 12, lastName: "Doe" });
+        run();
+      }
+      expect(runner).to.throw();
+    });
   });
 });

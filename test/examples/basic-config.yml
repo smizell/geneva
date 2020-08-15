@@ -1,5 +1,6 @@
 parameters:
   - name: firstName
+    check: ref:isString
   - name: lastName
 computed:
   - name: fullName
