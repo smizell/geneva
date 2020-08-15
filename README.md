@@ -19,7 +19,9 @@ The example below defines parameters, computed values, and finally passes them a
 ```yml
 parameters:
   - name: firstName
+    check: ref:isString
   - name: lastName
+    required: true
 computed:
   - name: fullName
     compute:
