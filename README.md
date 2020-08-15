@@ -60,7 +60,7 @@ This is using Ramda's `sum` function, so it is the same as:
 R.sum([1, 2]);
 ```
 
-Any Ramda function or Ramda Adjunct function is available in the code.
+Any [Ramda function](https://ramdajs.com/docs/) or [Ramda Adjunct](https://char0n.github.io/ramda-adjunct/) function is available in the code.
 
 Geneva also allows for defining variables and referencing those variables throughout your code. This example shows code that defines a variable and then uses that variable in the next call. The way Geneva knows that a string is a reference is by prepending "ref:" to the variable name.
 
