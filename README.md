@@ -25,10 +25,11 @@ parameters:
 computed:
   - name: fullName
     compute:
-      fn:template: ["{{firstName}} {{lastName}}"]
+      fn:template: "{{firstName}} {{lastName}}"
 definition:
   greeting:
-    fn:template: ["Hello, {{fullName}}"]
+    fn:template: |-
+      Hello, {{fullName}}
 ```
 
 You can evaluate this with code like:

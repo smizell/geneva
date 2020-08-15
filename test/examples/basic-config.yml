@@ -9,4 +9,5 @@ computed:
       fn:template: "{{firstName}} {{lastName}}"
 definition:
   greeting:
-    fn:template: "Hello, {{fullName}}"
+    fn:template: |-
+      Hello, {{fullName}}
