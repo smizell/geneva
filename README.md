@@ -133,6 +133,19 @@ fn:eval:
 # returns 3
 ```
 
+### Templates
+
+Geneva includes a `template` function that uses Mustache and allows for rendering string that contain references. It will not allow for referencing anything in the provided libraries like in Ramda. It will give you access to the local scope.
+
+```yml
+fn:do:
+  - fn:def: [name, Jane Doe]
+  - fn:template: Hello, {{name}}
+# returns Hello, Jane Doe
+```
+
+Check out the [Mustache manual](https://mustache.github.io/) for more information on using Mustache templates.
+
 ## Install
 
 This is currently in alpha for 1.0.0. There is an older version of Geneva that does not use Ramda and is not as easy to use.
