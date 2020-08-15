@@ -12,7 +12,7 @@ describe("Templates", function () {
             "fn:def": ["name", "Jane Doe"],
           },
           {
-            "fn:template": ["Hello, {{name}}"],
+            "fn:template": "Hello, {{name}}",
           },
         ],
       });
