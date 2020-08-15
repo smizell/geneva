@@ -2,6 +2,7 @@ parameters:
   - name: firstName
     check: ref:isString
   - name: lastName
+    required: true
 computed:
   - name: fullName
     compute:

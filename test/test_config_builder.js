@@ -13,16 +13,22 @@ describe("ConfigBuilder", function () {
       );
     });
 
-    it("correctly executes", function () {
+    it("correctly executes with valid data", function () {
       const run = config.build({ firstName: "Jane", lastName: "Doe" });
       const results = run();
       expect(results.greeting).to.equal("Hello, Jane Doe");
     });
 
-    it("throws with bad values", function () {
+    it("throws when a required field is left out", function () {
       function runner() {
-        const run = config.build({ firstName: 12, lastName: "Doe" });
-        run();
+        config.build({ firstName: "Jane" });
+      }
+      expect(runner).to.throw();
+    });
+
+    it("throws when checks aren't met", function () {
+      function runner() {
+        config.build({ firstName: 12, lastName: "Doe" });
       }
       expect(runner).to.throw();
     });
