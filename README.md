@@ -25,12 +25,10 @@ parameters:
 computed:
   - name: fullName
     compute:
-      fn:join: [" ", [ref:firstName, ref:lastName]]
+      fn:template: ["{{firstName}} {{lastName}}"]
 definition:
   greeting:
-    fn:concat:
-      - "Hello, "
-      - ref:fullName
+    fn:template: ["Hello, {{fullName}}"]
 ```
 
 You can evaluate this with code like:
