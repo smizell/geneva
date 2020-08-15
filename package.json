@@ -17,12 +17,13 @@
   "license": "MIT",
   "dependencies": {
     "immer": "^7.0.5",
+    "mustache": "^4.0.1",
     "ramda": "^0.27.0",
     "ramda-adjunct": "^2.27.0",
     "yaml": "^1.10.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^8.0.1"
+    "mocha": "^8.1.1"
   }
 }
