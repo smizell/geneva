@@ -3,8 +3,26 @@ const chai = require("chai");
 const expect = chai.expect;
 
 describe("Templates", function () {
-  context("when referencing variables in the scope", function () {
-    it("renders the string", function () {
+  context("template", function () {
+    context("when referencing variables in the scope", function () {
+      it("renders the string", function () {
+        const geneva = new Geneva();
+        const results = geneva.run({
+          "fn:do": [
+            {
+              "fn:def": ["name", "Jane Doe"],
+            },
+            {
+              "fn:template": "Hello, {{name}}",
+            },
+          ],
+        });
+        expect(results).to.equal("Hello, Jane Doe");
+      });
+    });
+  });
+  context("templateFile", function () {
+    it("renders the file", function () {
       const geneva = new Geneva();
       const results = geneva.run({
         "fn:do": [
@@ -12,11 +30,11 @@ describe("Templates", function () {
             "fn:def": ["name", "Jane Doe"],
           },
           {
-            "fn:template": "Hello, {{name}}",
+            "fn:templateFile": "./test/examples/view.mustache",
           },
         ],
       });
-      expect(results).to.equal("Hello, Jane Doe");
+      expect(results).to.equal("Hello, Jane Doe\n");
     });
   });
 });

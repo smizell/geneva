@@ -144,6 +144,16 @@ fn:do:
 # returns Hello, Jane Doe
 ```
 
+Additionally, you can use `templateFile` to specify a file path and run that as a template instead. It will load file and run it just like calling the `template` function, which gives the template access to the scope.
+
+```yml
+fn:do:
+  - fn:def: [name, Jane Doe]
+  - fn:templateFile: ./say-hello.mustache
+```
+
+This is useful if you want to keep templates out of your main file.
+
 Check out the [Mustache manual](https://mustache.github.io/) for more information on using Mustache templates.
 
 ### Including other files
