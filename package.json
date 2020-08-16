@@ -20,6 +20,7 @@
     "mustache": "^4.0.1",
     "ramda": "^0.27.0",
     "ramda-adjunct": "^2.27.0",
+    "saunter": "^0.10.0",
     "yaml": "^1.10.0"
   },
   "devDependencies": {

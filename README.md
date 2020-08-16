@@ -4,13 +4,21 @@ Geneva is a way to make ordinary data more dynamic. It allows you to include cod
 
 **Beware**: please do not run this code in production settings yet. This is an experimental library for testing out an idea. If you desire to use this kind of approach, consider testing this extensively and contributing back or writing something that works for you.
 
+## Install
+
+This is currently in alpha for 1.0.0. There is an older version of Geneva that does not use Ramda and is not as easy to use.
+
+```shell
+npm install geneva
+```
+
 ## Why do this?
 
 Since JSON parsers are everywhere, what if we turned JSON into its own little language? To make a usable language, we need a standard library, and Ramda is a great fit for that. Geneva mashes JSON/YAML and Ramda together to make a simple way to define Ramda code as JSON/YAML that can be passed around and evaluated as desired.
 
 It's just for fun. But it's not too far off from tools like CloudFormation or Azure's ARM that put a bunch of code-like structure in YAML. Maybe this will spark some ideas of creating a little language that can be used for writing and processing configurations.
 
-## Making Specifications Dynamic
+## Making specifications dynamic
 
 One main benefit of Geneva is that it can make static specifications dynamic. Instead of bloating a specification with ways to define variables, reference those variables, or do operations like join strings, use Geneva to provide all of them on top of a specification.
 
@@ -42,7 +50,7 @@ const results = run();
 // results is equal to { "greeting": "Hello, Jane Doe" }
 ```
 
-## Language Overview
+## Language overview
 
 Geneva allows you to pass in data and process that data as if it were code. Geneva looks for objects with one key that is the function name prefixed with "fn:" and an array of arguments to pass to the array.
 
@@ -59,8 +67,6 @@ This is using Ramda's `sum` function, so it is the same as:
 R.sum([1, 2]);
 ```
 
-Any [Ramda function](https://ramdajs.com/docs/) or [Ramda Adjunct](https://char0n.github.io/ramda-adjunct/) function is available in the code.
-
 Geneva also allows for defining variables and referencing those variables throughout your code. This example shows code that defines a variable and then uses that variable in the next call. The way Geneva knows that a string is a reference is by prepending "ref:" to the variable name.
 
 ```yml
@@ -74,7 +80,15 @@ This example used `do`, which is a special function that evaluates everything an
 
 The reason for appending these special characters is so that plain data can be passed in. This means that it can evaluate code in deeply-nested objects.
 
-### Functions
+### Supported functions
+
+Geneva includes functions from the following libraries for use in your code.
+
+1. [Ramda function](https://ramdajs.com/docs/)
+1. [Ramda Adjunct](https://char0n.github.io/ramda-adjunct/)
+1. [Saunter](https://github.com/smizell/saunter)
+
+### Defining functions
 
 Geneva has limited support of functions (also called lambdas in this project). Any function defined will essentially freeze the existing scope and then scope all variables within it during the call. This means that functions cannot see any changes after they are defined, and they cannot make changes to the outer scope when they are called.
 
@@ -135,7 +149,7 @@ fn:eval:
 
 ### Templates
 
-Geneva includes a `template` function that uses Mustache and allows for rendering string that contain references. It will not allow for referencing anything in the provided libraries like in Ramda. It will give you access to the local scope.
+Geneva includes a `template` function that uses Mustache and allows for rendering string that contain references. It will not allow for referencing anything in the provided in the supported libraries. It will however give you access to the local scope.
 
 ```yml
 fn:do:
@@ -144,7 +158,7 @@ fn:do:
 # returns Hello, Jane Doe
 ```
 
-Additionally, you can use `templateFile` to specify a file path and run that as a template instead. It will load file and run it just like calling the `template` function, which gives the template access to the scope.
+You can also use `templateFile` to specify a file path and run that as a template instead. It will load file and run it just like calling the `template` function, which gives the template access to the scope.
 
 ```yml
 fn:do:
@@ -178,15 +192,9 @@ fn:readFile: ./my-file.txt
 
 This does not execute the file or render as a template.
 
-## Install
-
-This is currently in alpha for 1.0.0. There is an older version of Geneva that does not use Ramda and is not as easy to use.
-
-```shell
-npm install geneva
-```
-
 ## Usage
+
+### Using in JavaScript
 
 You first need a code runner.
 
@@ -204,7 +212,7 @@ geneva.run({ "fn:sum": [1, 2] });
 
 If you are using JSON or YAML, you'll need to parse it first.
 
-### Initial Data
+#### Initial data
 
 You can pass initial data into Geneva in order to set up the scope before your code ever runs.
 
@@ -228,6 +236,8 @@ const geneva = new Geneva({
 geneva.run({ "fn:hello": ["World"] }); // return Hello, World
 ```
 
+#### Forms
+
 If you want to be able to evaluate code at runtime in your own function, you can pass in a special form to do so. This will pass in the raw code to your function along with the runtime for the given scope. Note that the runtime you get will be scoped to where the code is called, so the context will affect the scope.
 
 This essentially allows you to modify the way the code itself executes. With great power comes great responsibility.
@@ -249,6 +259,8 @@ geneva.run({
   },
 });
 ```
+
+#### Custom runtime
 
 Lastly, if you want to your own runtime to play with, you can call `geneva.buildRuntime()`, which takes the same options as `geneva.run`. This will give you access to the runtime to inspect and change the scope.
 
