@@ -7,7 +7,7 @@
     "test": "./node_modules/mocha/bin/mocha"
   },
   "bin": {
-    "geneva": "bin/repl.js"
+    "geneva": "bin/cli.js"
   },
   "keywords": [
     "JSON",
@@ -16,6 +16,7 @@
   "author": "Stephen Mizell",
   "license": "MIT",
   "dependencies": {
+    "commander": "^6.0.0",
     "immer": "^7.0.5",
     "mustache": "^4.0.1",
     "ramda": "^0.27.0",

@@ -264,6 +264,20 @@ geneva.run({
 
 Lastly, if you want to your own runtime to play with, you can call `geneva.buildRuntime()`, which takes the same options as `geneva.run`. This will give you access to the runtime to inspect and change the scope.
 
-## REPL
+## CLI
 
-There is a REPL to use by running the `geneva` command. This will give you a prompt where you can directly type YAMP in Geneva code. Use `.help` to see other available commands.
+### Definition
+
+```
+geneva definition ./definition.yml ./params.yml
+```
+
+This will load a definition file and params and run them.
+
+### REPL
+
+```
+geneva repl
+```
+
+This will give you a prompt where you can directly type YAMP in Geneva code. Use `.help` to see other available commands.
