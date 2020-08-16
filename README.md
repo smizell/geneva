@@ -264,9 +264,11 @@ geneva.run({
 
 Lastly, if you want to your own runtime to play with, you can call `geneva.buildRuntime()`, which takes the same options as `geneva.run`. This will give you access to the runtime to inspect and change the scope.
 
-## CLI
+### From the command line
 
-### Definition
+If you install Geneva globally, you'll get the command line tool `geneva`.
+
+#### Definition
 
 ```
 geneva definition ./definition.yml ./params.yml
@@ -274,7 +276,7 @@ geneva definition ./definition.yml ./params.yml
 
 This will load a definition file and params and run them.
 
-### REPL
+#### REPL
 
 ```
 geneva repl
