@@ -6,7 +6,7 @@ const util = require("util");
 const YAML = require("yaml");
 const { program } = require("commander");
 const { repl } = require("./repl");
-const { ConfigBuilder } = require("../lib/base");
+const { ConfigBuilder, Geneva } = require("../lib/base");
 
 program.version("0.1.0");
 
@@ -24,5 +24,12 @@ program
     const result = run();
     console.log(util.inspect(result, false, null, true /* enable colors */));
   });
+
+program.command("run <codeFilePath>").action(function (codeFilePath) {
+  const code = fs.readFileSync(path.resolve(codeFilePath), "utf-8");
+  const geneva = Geneva.withObjectParser();
+  const runtime = geneva.buildRuntime();
+  console.log(runtime.run(YAML.parse(code)));
+});
 
 program.parse(process.argv);

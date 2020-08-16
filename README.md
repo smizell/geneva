@@ -268,6 +268,14 @@ Lastly, if you want to your own runtime to play with, you can call `geneva.build
 
 If you install Geneva globally, you'll get the command line tool `geneva`.
 
+#### Run code
+
+```
+geneva run ./code.yml
+```
+
+This will run a given file through Geneva.
+
 #### Definition
 
 ```
