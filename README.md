@@ -88,11 +88,35 @@ The reason for appending these special characters is so that plain data can be p
 
 ### Supported functions
 
-Geneva includes functions from the following libraries for use in your code.
+Geneva includes functions from the following libraries for use in your code. The following are added directly into the scope.
 
 1. [Ramda function](https://ramdajs.com/docs/)
 1. [Ramda Adjunct](https://char0n.github.io/ramda-adjunct/)
-1. [Saunter](https://github.com/smizell/saunter)
+
+These are namespaced.
+
+1. [Saunter](https://github.com/smizell/saunter) as `saunter`
+1. [JSON Path](https://github.com/dchester/jsonpath) as `jq`
+
+### Calling and referencing
+
+You can call a function by creating an object with one key with the function name and prefixed with `fn:`.
+
+```yml
+fn:add: [1, 2]
+```
+
+You can use dot notation to reference nested functions.
+
+```yml
+fn:mycode.foo: [bar, baz]
+```
+
+To reference values instead of calling it, prefix the variable with `ref:`. You can use dot notation with refs as well.
+
+```yml
+ref:add
+```
 
 ### Defining functions
 
