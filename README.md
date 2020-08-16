@@ -40,7 +40,13 @@ definition:
       Hello, {{fullName}}
 ```
 
-You can evaluate this with code like:
+You can use the CLI to pass in parameters and run this file.
+
+```sh
+geneva definition ./definition.yml ./params.yml
+```
+
+You can evaluate this in JavaScript with code like:
 
 ```js
 const { ConfigBuilder } = require("geneva");
@@ -270,7 +276,7 @@ If you install Geneva globally, you'll get the command line tool `geneva`.
 
 #### Run code
 
-```
+```sh
 geneva run ./code.yml
 ```
 
@@ -278,7 +284,7 @@ This will run a given file through Geneva.
 
 #### Definition
 
-```
+```sh
 geneva definition ./definition.yml ./params.yml
 ```
 
@@ -286,7 +292,7 @@ This will load a definition file and params and run them.
 
 #### REPL
 
-```
+```sh
 geneva repl
 ```
 
