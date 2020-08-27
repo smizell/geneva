@@ -49,8 +49,9 @@ geneva definition ./definition.yml ./params.yml
 You can evaluate this in JavaScript with code like:
 
 ```js
+const fs = require("fs");
 const { ConfigBuilder } = require("geneva");
-const config = ConfigBuilder.fromYAML(yamlAbove);
+const config = ConfigBuilder.fromYAML(yamlAbove, { fs });
 const run = config.build({ firstName: "Jane", lastName: "Doe" });
 const results = run();
 // results is equal to { "greeting": "Hello, Jane Doe" }
@@ -226,11 +227,22 @@ This does not execute the file or render as a template.
 
 ### Using in JavaScript
 
-You first need a code runner.
+You first need a code runner. Geneva tries not to know about the world it's in, so you'll need to pass in the `fs` module.
 
 ```javascript
+const fs = require("fs");
 const { Geneva } = require("geneva");
-const geneva = new Geneva();
+const geneva = new Geneva({ fs });
+```
+
+You can use `SimpleFS` as a way to fake the file system. It only provides `readFileSync` because that's all Geneva uses.
+
+```javascript
+const { Geneva, SimpleFS } = require("geneva");
+const fs = new SimpleFS({
+  "myfile.txt": "content here",
+});
+const geneva = new Geneva({ fs });
 ```
 
 You can then run code as such:
