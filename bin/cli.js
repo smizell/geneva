@@ -19,7 +19,7 @@ program
   .action(function (defPath, paramPath) {
     const defFile = fs.readFileSync(path.resolve(defPath), "utf-8");
     const paramFile = fs.readFileSync(path.resolve(paramPath), "utf-8");
-    const config = new ConfigBuilder({ config: YAML.parse(defFile) });
+    const config = new ConfigBuilder({ config: YAML.parse(defFile), fs });
     const run = config.build(YAML.parse(paramFile));
     const result = run();
     console.log(util.inspect(result, false, null, true /* enable colors */));
@@ -27,7 +27,7 @@ program
 
 program.command("run <codeFilePath>").action(function (codeFilePath) {
   const code = fs.readFileSync(path.resolve(codeFilePath), "utf-8");
-  const geneva = Geneva.withObjectParser();
+  const geneva = new Geneva();
   const runtime = geneva.buildRuntime();
   console.log(runtime.run(YAML.parse(code)));
 });
