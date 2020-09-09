@@ -13,6 +13,31 @@ describe("Lambda", () => {
       ]);
       expect(result).to.equal(5);
     });
+
+    it.only("handles single value arguments", function () {
+      const geneva = new Geneva();
+      const result = geneva.run({
+        "fn:do": [
+          {
+            "fn:def": [
+              "foo",
+              {
+                "fn:lambda": [
+                  "foo",
+                  {
+                    "fn:add": [4, "ref:foo"],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "fn:foo": [5],
+          },
+        ],
+      });
+      expect(result).to.equal(9);
+    });
   });
 
   context("when defining a multi-line function", function () {
